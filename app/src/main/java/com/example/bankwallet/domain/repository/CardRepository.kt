@@ -1,4 +1,4 @@
-package com.example.bankwallet.domain
+package com.example.bankwallet.domain.repository
 
 import com.example.bankwallet.domain.model.Card
 import kotlinx.coroutines.flow.Flow

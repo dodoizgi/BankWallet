@@ -2,7 +2,7 @@ package com.example.bankwallet.data.repository
 
 import com.example.bankwallet.data.local.CardDao
 import com.example.bankwallet.data.local.CardEntity
-import com.example.bankwallet.domain.CardRepository
+import com.example.bankwallet.domain.repository.CardRepository
 import com.example.bankwallet.domain.model.Card
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
