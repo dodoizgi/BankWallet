@@ -20,17 +20,16 @@ class CardRepositoryImpl @Inject constructor(
                     cardNumber = entity.cardNumber,
                     cvv = entity.cvv,
                     expirationDate = entity.expirationDate,
-                    bankName = entity.bankName
                 )
             }
         }
     }
 
     override suspend fun addCard(card: Card) {
-        cardDao.insertCard(CardEntity(card.id, card.cardName, card.cardNumber, card.cvv, card.expirationDate, card.bankName))
+        cardDao.insertCard(CardEntity(card.id, card.cardName, card.cardNumber, card.cvv, card.expirationDate))
     }
 
     override suspend fun deleteCard(card: Card) {
-        cardDao.deleteCard(CardEntity(card.id, card.cardName, card.cardNumber, card.cvv, card.expirationDate, card.bankName))
+        cardDao.deleteCard(CardEntity(card.id, card.cardName, card.cardNumber, card.cvv, card.expirationDate))
     }
 }
