@@ -19,8 +19,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.bankwallet.domain.model.Card
@@ -34,7 +36,7 @@ fun AddCardScreen(
     var cardName by remember { mutableStateOf("") }
     var cardNumber by remember { mutableStateOf("") }
     var cvv by remember { mutableStateOf("") }
-    var expirationDate by remember { mutableStateOf("") }
+    var expirationDate by remember { mutableStateOf(TextFieldValue("")) }
 
     var cardNameError by remember { mutableStateOf<String?>(null) }
     var cardNumberError by remember { mutableStateOf<String?>(null) }
@@ -53,7 +55,7 @@ fun AddCardScreen(
         return when {
             number.isBlank() -> "Kart numarası boş olamaz"
             !number.all { it.isDigit() } -> "Sadece rakam giriniz"
-            number.length != 16 -> "Kart numarası 16 haneli olmalıdır"
+            number.length in 15..16 -> "Kart numarası 15 veya 16 haneli olmalıdır"
             else -> null
         }
     }
@@ -67,10 +69,10 @@ fun AddCardScreen(
         }
     }
 
-    fun validateExpirationDate(date: String): String? {
+    fun validateExpirationDate(date: TextFieldValue): String? {
         return when {
-            date.isBlank() -> "Son kullanma tarihi boş olamaz"
-            !date.matches(Regex("^(0[1-9]|1[0-2])/([0-9]{2})\$")) -> "Geçerli bir tarih giriniz (AA/YY)"
+            date.text.isBlank() -> "Son kullanma tarihi boş olamaz"
+            !date.text.matches(Regex("^(0[1-9]|1[0-2])/([0-9]{2})\$")) -> "Geçerli bir tarih giriniz (AA/YY)"
             else -> null
         }
     }
@@ -153,16 +155,20 @@ fun AddCardScreen(
 
             OutlinedTextField(
                 value = expirationDate,
-                onValueChange = {
-                    if (it.length <= 5) {
-                        val formattedValue = if (it.length == 2 && expirationDate.length == 1) {
-                            "$it/"
-                        } else {
-                            it
-                        }
-                        expirationDate = formattedValue
-                        expirationDateError = validateExpirationDate(formattedValue)
-                    }
+                onValueChange = { newValue ->
+                    val digits = newValue.text.filter { it.isDigit() }
+
+                    val formattedValue = when {
+                        digits.length <= 2 -> digits
+                        else -> digits.take(2) + "/" + digits.drop(2)
+                    }.take(5)
+
+                    expirationDate = TextFieldValue(
+                        text = formattedValue,
+                        selection = TextRange(formattedValue.length) // imleç en sona
+                    )
+
+                    expirationDateError = validateExpirationDate(expirationDate)
                 },
                 label = { Text("Son Kullanma Tarihi (AA/YY)") },
                 modifier = Modifier.fillMaxWidth(),
@@ -193,7 +199,7 @@ fun AddCardScreen(
                                     cardName = cardName,
                                     cardNumber = cardNumber,
                                     cvv = cvv,
-                                    expirationDate = expirationDate
+                                    expirationDate = expirationDate.text
                                 )
                             )
                         )
