@@ -37,11 +37,14 @@ fun AddCardScreen(
     var cardNumber by remember { mutableStateOf("") }
     var cvv by remember { mutableStateOf("") }
     var expirationDate by remember { mutableStateOf(TextFieldValue("")) }
+    var ownerName by remember { mutableStateOf("") }
 
     var cardNameError by remember { mutableStateOf<String?>(null) }
     var cardNumberError by remember { mutableStateOf<String?>(null) }
     var cvvError by remember { mutableStateOf<String?>(null) }
     var expirationDateError by remember { mutableStateOf<String?>(null) }
+    var ownerNameError by remember { mutableStateOf<String?>(null) }
+
 
     fun validateCardName(name: String): String? {
         return when {
@@ -77,12 +80,21 @@ fun AddCardScreen(
         }
     }
 
+    fun validateOwnerName(name: String): String? {
+        return when {
+            name.isBlank() -> "Kart sahibi adı boş olamaz"
+            name.length > 60 -> "Kart sahibi adı 60 karakterden uzun olamaz"
+            else -> null
+        }
+    }
+
     fun isFormValid(): Boolean {
         val nameValid = validateCardName(cardName) == null
         val numberValid = validateCardNumber(cardNumber) == null
         val cvvValid = validateCvv(cvv) == null
         val dateValid = validateExpirationDate(expirationDate) == null
-        return nameValid && numberValid && cvvValid && dateValid
+        val ownerNameValid = validateOwnerName(ownerName) == null
+        return nameValid && numberValid && cvvValid && dateValid && ownerNameValid
     }
 
     Scaffold(
@@ -165,7 +177,7 @@ fun AddCardScreen(
 
                     expirationDate = TextFieldValue(
                         text = formattedValue,
-                        selection = TextRange(formattedValue.length) // imleç en sona
+                        selection = TextRange(formattedValue.length)
                     )
 
                     expirationDateError = validateExpirationDate(expirationDate)
@@ -181,6 +193,22 @@ fun AddCardScreen(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done
                 )
+            )
+
+            OutlinedTextField(
+                value = ownerName,
+                onValueChange = {
+                    ownerName = it
+                    ownerNameError = validateOwnerName(it)
+                },
+                label = { Text("Kart Sahibi") },
+                modifier = Modifier.fillMaxWidth(),
+                isError = ownerNameError != null,
+                supportingText = {
+                    ownerNameError?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+                },
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -199,7 +227,8 @@ fun AddCardScreen(
                                     cardName = cardName,
                                     cardNumber = cardNumber,
                                     cvv = cvv,
-                                    expirationDate = expirationDate.text
+                                    expirationDate = expirationDate.text,
+                                    ownerName = ownerName
                                 )
                             )
                         )

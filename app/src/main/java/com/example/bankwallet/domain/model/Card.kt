@@ -6,4 +6,5 @@ data class Card(
     val cardNumber: String,
     val cvv: String,
     val expirationDate: String,
+    val ownerName: String
 )

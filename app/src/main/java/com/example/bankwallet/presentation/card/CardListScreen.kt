@@ -1,19 +1,25 @@
 package com.example.bankwallet.presentation.card
 
-import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
@@ -32,10 +38,18 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.example.bankwallet.R
 import com.example.bankwallet.domain.model.Card
+import com.example.bankwallet.ui.theme.LightGray
+import com.example.bankwallet.ui.theme.White
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,7 +61,7 @@ fun CardListScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("My Cards") })
+            TopAppBar(title = { Text("KARTLIK") })
         },
         floatingActionButton = {
             FloatingActionButton(onClick = onAddClick) {
@@ -63,46 +77,130 @@ fun CardListScreen(
     }
 }
 
-@SuppressLint("ServiceCast")
 @Composable
 fun CardItem(card: Card, viewModel: CardViewModel) {
     val context = LocalContext.current
 
     Card(
         modifier = Modifier
+            .height(240.dp)
             .fillMaxWidth()
-            .padding(8.dp),
-        elevation = CardDefaults.cardElevation()
+            .padding(16.dp),
+        elevation = CardDefaults.cardElevation(),
+        shape = RoundedCornerShape(24.dp)
     ) {
-        Column(Modifier.padding(16.dp)) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column {
-                    Text(text = card.cardName)
-                    Text(text = "**** **** **** ${card.cardNumber.takeLast(4)}")
-                    Spacer(Modifier.height(8.dp))
-                    TextButton(onClick = {
-                        val clipboard =
-                            context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                        val clip = ClipData.newPlainText("card_number", card.cardNumber)
-                        clipboard.setPrimaryClip(clip)
-                        Toast.makeText(context, "Copied to clipboard!", Toast.LENGTH_SHORT).show()
-                    }) {
-                        Text("Copy Number")
-                    }
-                }
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
 
-                IconButton(onClick = { viewModel.handleIntent(CardIntent.DeleteCard(card)) }) {
-                    Icon(
-                        Icons.Default.Delete,
-                        contentDescription = "Delete Card",
-                        modifier = Modifier.padding(8.dp)
-                    )
+            Image(
+                painter = painterResource(id = R.drawable.card_background),
+                contentDescription = null,
+                modifier = Modifier.matchParentSize(),
+                contentScale = ContentScale.Crop
+            )
+
+            Column(Modifier.padding(16.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column (Modifier.fillMaxHeight()){
+
+                        Text(
+                            text = "Kart Adı",
+                            color = Color(LightGray.value),
+                            fontSize = 12.sp
+                        )
+
+                        Text(
+                            text = card.cardName,
+                            Modifier.padding(bottom = 32.dp),
+                            color = Color(White.value),
+                            fontSize = 14.sp
+                        )
+
+                        Text(
+                            text = "Kart Numarası",
+                            color = Color(LightGray.value),
+                            fontSize = 12.sp
+                        )
+
+                        Text(
+                            text = "${card.cardNumber.take(4)}   ****   ****   ${
+                                card.cardNumber.takeLast(
+                                    4
+                                )
+                            }",
+                            color = Color(White.value),
+                            fontSize = 18.sp
+                        )
+
+                        Column (verticalArrangement = Arrangement.Bottom) {
+                            Text(
+                                text = "İsim Soyisim",
+                                color = Color(LightGray.value),
+                                fontSize = 12.sp
+                            )
+
+                            Text(
+                                text = card.ownerName,
+                                color = Color(White.value),
+                                fontSize = 14.sp
+                            )
+                        }
+                    }
+
+                    Column(modifier = Modifier.fillMaxHeight()) {
+                        Image(
+                            modifier = Modifier.size(48.dp),
+                            painter = painterResource(id = R.drawable.chip),
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                            alignment = Alignment.TopEnd
+                        )
+
+                        IconButton(
+                            modifier = Modifier.padding(top = 20.dp),
+                            onClick = { viewModel.handleIntent(CardIntent.DeleteCard(card)) }) {
+                            Icon(
+                                Icons.Default.Delete,
+                                contentDescription = "Delete Card",
+                                modifier = Modifier.padding(8.dp)
+                            )
+                        }
+
+                        Column(
+                            modifier = Modifier
+                                .wrapContentWidth(),
+                            verticalArrangement = Arrangement.Bottom
+                        ) {
+                            Text(text = card.expirationDate, color = Color(White.value))
+
+                            Text(text = card.cvv, color = Color(White.value))
+                        }
+                    }
                 }
             }
         }
     }
 }
+
+
+
+
+
+/*
+TextButton(onClick = {
+                            val clipboard =
+                                context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                            val clip = ClipData.newPlainText("card_number", card.cardNumber)
+                            clipboard.setPrimaryClip(clip)
+                            Toast.makeText(context, "Copied to clipboard!", Toast.LENGTH_SHORT)
+                                .show()
+                        }) {
+                            Text("Copy Number")
+                        }
+ */
