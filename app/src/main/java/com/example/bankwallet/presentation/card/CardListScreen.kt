@@ -107,38 +107,40 @@ fun CardItem(card: Card, viewModel: CardViewModel) {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Column (Modifier.fillMaxHeight()){
+                    Column (Modifier.fillMaxHeight(), verticalArrangement = Arrangement.SpaceBetween){
 
-                        Text(
-                            text = "Kart Adı",
-                            color = Color(LightGray.value),
-                            fontSize = 12.sp
-                        )
+                        Column {
+                            Text(
+                                text = "Kart Adı",
+                                color = Color(LightGray.value),
+                                fontSize = 12.sp
+                            )
 
-                        Text(
-                            text = card.cardName,
-                            Modifier.padding(bottom = 32.dp),
-                            color = Color(White.value),
-                            fontSize = 14.sp
-                        )
+                            Text(
+                                text = card.cardName,
+                                Modifier.padding(bottom = 48.dp),
+                                color = Color(White.value),
+                                fontSize = 14.sp
+                            )
 
-                        Text(
-                            text = "Kart Numarası",
-                            color = Color(LightGray.value),
-                            fontSize = 12.sp
-                        )
+                            Text(
+                                text = "Kart Numarası",
+                                color = Color(LightGray.value),
+                                fontSize = 12.sp
+                            )
 
-                        Text(
-                            text = "${card.cardNumber.take(4)}   ****   ****   ${
-                                card.cardNumber.takeLast(
-                                    4
-                                )
-                            }",
-                            color = Color(White.value),
-                            fontSize = 18.sp
-                        )
+                            Text(
+                                text = "${card.cardNumber.take(4)}   ****   ****   ${
+                                    card.cardNumber.takeLast(
+                                        4
+                                    )
+                                }",
+                                color = Color(White.value),
+                                fontSize = 18.sp
+                            )
+                        }
 
-                        Column (verticalArrangement = Arrangement.Bottom) {
+                        Column {
                             Text(
                                 text = "İsim Soyisim",
                                 color = Color(LightGray.value),
@@ -153,7 +155,7 @@ fun CardItem(card: Card, viewModel: CardViewModel) {
                         }
                     }
 
-                    Column(modifier = Modifier.fillMaxHeight()) {
+                    Column(modifier = Modifier.fillMaxHeight(), verticalArrangement = Arrangement.SpaceBetween) {
                         Image(
                             modifier = Modifier.size(48.dp),
                             painter = painterResource(id = R.drawable.chip),
