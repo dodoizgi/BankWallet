@@ -6,6 +6,7 @@ import com.example.bankwallet.data.local.AppDatabase
 import com.example.bankwallet.data.local.CardDao
 import com.example.bankwallet.data.repository.CardRepositoryImpl
 import com.example.bankwallet.domain.repository.CardRepository
+import com.example.bankwallet.domain.usecase.ValidateCardUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,4 +29,8 @@ object AppModule {
 
     @Provides
     fun provideRepository(dao: CardDao): CardRepository = CardRepositoryImpl(dao)
+
+    @Provides
+    @Singleton
+    fun provideValidateCardUseCase(): ValidateCardUseCase = ValidateCardUseCase()
 }
