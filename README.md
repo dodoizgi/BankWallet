@@ -6,11 +6,11 @@ Bank Wallet, kullanıcıların kredi ve banka kartlarını güvenli bir şekilde
 
 - [Geliştirme Notları](#geliştirme-notları)
 - [Özellikler](#özellikler)
+- [Ekran Görüntüleri](#ekran-görüntüleri)
 - [Teknoloji Stack](#teknoloji-stack)
 - [Proje Yapısı](#proje-yapısı)
 - [Kurulum](#kurulum)
 - [Kullanım](#kullanım)
-- [Ekran Görüntüleri](#ekran-görüntüleri)
 - [API Mimarisi](#api-mimarisi)
 - [Veritabanı](#veritabanı)
 - [İç Yapı](#iç-yapı)
@@ -41,7 +41,6 @@ Bank Wallet, kullanıcıların kredi ve banka kartlarını güvenli bir şekilde
 
 ---
 
-
 ## ✨ Özellikler
 
 ### Temel Fonksiyonlar
@@ -65,6 +64,14 @@ Bank Wallet, kullanıcıların kredi ve banka kartlarını güvenli bir şekilde
 - 📋 Clipboard'a kopyalama sırasında toast notifikasyon
 - 💾 Veritabanında güvenli saklama
 
+---
+
+## 📸 Ekran Görüntüleri
+
+<p align="center">
+  <img src="screenshots/screenshot_home.png" alt="Card Front" width="250" style="margin-right: 250px;"/>
+  <img src="screenshots/screenshot_add_card.png" alt="Card Back" width="250"/>
+</p>
 ---
 
 ## 🏗️ Teknoloji Stack
@@ -204,18 +211,6 @@ Buton tıklandığında "Kopyalandı!" mesajı gösterilir.
 1. Silmek istediğiniz kartı açın
 2. Kart üzerindeki **çöp kutusu** ikonuna tıklayın
 3. Kart silinecektir
-
----
-
-## 📸 Ekran Görüntüleri
-
-### Ana Ekran
-
-![Onboarding Screen 1](screenshots/screenshot_home.png)
-
-### Kart Ekleme Ekranı
-
-![Onboarding Screen 2](screenshots/screenshot_add_card.png)
 
 ---
 
