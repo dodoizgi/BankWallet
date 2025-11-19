@@ -161,51 +161,6 @@ BankWallet/
 └── COMPLETION_CHECKLIST.md ✨                       # Tamamlama listesi
 ```
 
-**✨ = Yeni Dosya**
-**🔄 = Refactored/Updated**
-│   │   │   │   ├── MainActivity.kt                  # Main Activity
-│   │   │   │   ├── data/                            # Data Layer
-│   │   │   │   │   ├── database/
-│   │   │   │   │   │   ├── CardDatabase.kt          # Room Database
-│   │   │   │   │   │   └── CardDao.kt               # Database Access Object
-│   │   │   │   │   ├── entity/
-│   │   │   │   │   │   └── CardEntity.kt            # Veritabanı Entity
-│   │   │   │   │   └── repository/
-│   │   │   │   │       └── CardRepositoryImpl.kt     # Repository Implementasyonu
-│   │   │   │   ├── domain/                          # Domain Layer
-│   │   │   │   │   ├── model/
-│   │   │   │   │   │   └── Card.kt                  # Domain Model
-│   │   │   │   │   └── repository/
-│   │   │   │   │       └── CardRepository.kt        # Repository Interface
-│   │   │   │   ├── presentation/                    # Presentation Layer
-│   │   │   │   │   ├── card/
-│   │   │   │   │   │   ├── CardListScreen.kt        # Kart Listesi Ekranı
-│   │   │   │   │   │   ├── CardAddScreen.kt         # Kart Ekleme Ekranı
-│   │   │   │   │   │   ├── CardViewModel.kt         # ViewModel
-│   │   │   │   │   │   ├── CardIntent.kt            # User Intents
-│   │   │   │   │   │   └── CardState.kt             # UI State
-│   │   │   │   ├── di/                              # Dependency Injection
-│   │   │   │   │   └── AppModule.kt                 # Hilt Modules
-│   │   │   │   └── ui/                              # UI Resources
-│   │   │   │       ├── theme/
-│   │   │   │       │   ├── Color.kt                 # Renkler
-│   │   │   │       │   ├── Type.kt                  # Tipografi
-│   │   │   │       │   └── Theme.kt                 # Tema
-│   │   │   │       └── drawable/
-│   │   │   │           ├── card_background.png      # Kart Arka Planı
-│   │   │   │           └── chip.png                 # Kart Çipi
-│   │   │   └── AndroidManifest.xml
-│   │   ├── androidTest/                             # Android Test
-│   │   └── test/                                    # Unit Test
-│   ├── build.gradle.kts                             # App Module Build Config
-│   └── proguard-rules.pro                           # ProGuard Rules
-├── gradle/                                          # Gradle Wrapper
-├── build.gradle.kts                                 # Root Build Config
-├── settings.gradle.kts                              # Gradle Settings
-├── gradle.properties                                # Gradle Properties
-└── README.md                                        # Bu dosya
-```
-
 ---
 
 ## 🔧 Kurulum
